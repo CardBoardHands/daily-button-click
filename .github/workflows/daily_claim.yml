@@ -1,0 +1,28 @@
+name: Daily Claim Button
+
+on:
+  schedule:
+    # Runs at 7 AM UTC daily, adjust as you like
+    - cron: '0 7 * * *'
+
+jobs:
+  daily-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install Selenium + Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser chromium-chromedriver
+          pip install selenium
+
+      - name: Run the Claim Button script
+        run: python claim_button.py
